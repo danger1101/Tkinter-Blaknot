@@ -1,0 +1,48 @@
+from tkinter import *
+from tkinter.filedialog import *
+
+canvas = Tk()
+canvas.geometry("400x600")
+canvas.title("Notepad")
+canvas.config(bg="white")
+
+
+def saqla():
+    new_file = asksaveasfile(mode="w", filetype=[("textfiles", "*.txt")])
+    if new_file is None:
+        return
+    text = str(entry.get(1.0, END))
+    new_file.write(text)
+    new_file.close()
+
+
+def open():
+    file = askopenfile(mode="r", filetype=[("textfiles", "*.txt")])
+    if file is not None:
+        content = file.read()
+        entry.insert(INSERT, content)
+
+
+def delete():
+    entry.delete(1.0, END)
+
+
+top = Frame(canvas)
+top.pack(padx=10, pady=5, anchor="nw")
+
+button1 = Button(canvas, text="ochmoq", bg="white", command=open)
+button1.pack(in_=top, side=LEFT)
+
+button2 = Button(canvas, text="saqlash", bg="white", command=saqla)
+button2.pack(in_=top, side=LEFT)
+
+button3 = Button(canvas, text="O'chirish", bg="white", command=delete)
+button3.pack(in_=top, side=LEFT)
+
+button4 = Button(canvas, text="exit", bg="white", command=canvas.destroy)
+button4.pack(in_=top, side=LEFT)
+
+entry = Text(canvas, bg="#F9DDA4", font=("poppins,15"))
+entry.pack(padx=10, pady=5, expand=True, fill=BOTH)
+
+canvas.mainloop()
